@@ -28,14 +28,8 @@ export const createMatchSchema = z
     sport: z.string().min(1),
     homeTeam: z.string().min(1),
     awayTeam: z.string().min(1),
-    startTime: z
-      .string()
-      .datetime({ offset: true })
-      .refine((s) => !isNaN(Date.parse(s)), { message: 'startTime must be an ISO date' }),
-    endTime: z
-      .string()
-      .datetime({ offset: true })
-      .refine((s) => !isNaN(Date.parse(s)), { message: 'endTime must be an ISO date' }),
+    startTime: z.isoDateString,
+    endTime: z.isoDateString,
     homeScore: z.coerce.number().int().nonnegative().optional(),
     awayScore: z.coerce.number().int().nonnegative().optional(),
   })

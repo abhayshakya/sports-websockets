@@ -41,13 +41,18 @@ matchRouter.post('/', async (req, res) => {
     }
 
     try {
+        const status = getMatchStatus(startTime, endtime);
+
+        if(!status){
+            return res.status(400).json({ error: 'Unable to determine match status for provided times.'})
+        }
         const [event] = await db.insert(matches).values({
             ...parsed.data,
             startTime: new Date(startTime),
             endTime: new Date(endTime),
             homeScore: homeScore ?? 0,
             awayScore: awayScore ?? 0,
-            status: getMatchStatus(startTime, endTime),
+            status,
         }).returning();
 
         res.status(201).json({ data: event });
