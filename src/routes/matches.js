@@ -41,7 +41,7 @@ matchRouter.post('/', async (req, res) => {
     }
 
     try {
-        const status = getMatchStatus(startTime, endtime);
+        const status = getMatchStatus(startTime, endTime);
 
         if(!status){
             return res.status(400).json({ error: 'Unable to determine match status for provided times.'})
